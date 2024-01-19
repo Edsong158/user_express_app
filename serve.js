@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const cors = require('cors');
 
 const PORT = 3334;
 
@@ -20,6 +21,22 @@ async function saveUserData(usersArr) {
 
 // Opening up the middleware channel to allow json to be sent through from the client
 app.use(express.json());
+
+// Share or created a GET route for every file in the public folder
+app.use(express.static('./public'));
+
+// open CORS to all domains
+app.use(cors());
+
+// // root route
+
+// app.get('/', (requestObj,responseObj) => {
+// responseObj.sendFile(path.join(__dirname, './public/index.html'));
+// });
+
+// app.get('/css/style.css', (requestObj,responseObj) => {
+//   responseObj.sendFile(path.join(__dirname, './public/css/style.css'))
+// });
 
 // Route to retreive/GET all users from the json database
 app.get('/api/users', async (requestObj, responseObj) => {
