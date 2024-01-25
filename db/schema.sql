@@ -11,9 +11,4 @@ CREATE TABLE users (
     password VARCHAR(250) NOT NULL
 );
 
--- INSERT INTO users (username, email, password) VALUES
---   ('JD', 'jd@test.com', 'password123'),
---   ('Edson', 'Edson@test.com', 'password123'),
---   ('Estella', 'Estella@test.com', 'password123');
 
---   SELECT * FROM users;
