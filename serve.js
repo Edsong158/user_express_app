@@ -1,74 +1,37 @@
 const express = require('express');
-const path = require('path');
-const fs = require('fs');
-const cors = require('cors');
+
 
 const PORT = 3334;
 
 const app = express();
 
-async function getUserData() {
-  const users = await fs.promises.readFile('./data.json', 'utf8');
 
-  return JSON.parse(users);
-}
+// db.query('INSERT INTO users (username, email, password) VALUES ("jd", "jd@test.com", "password123")', (err, results) => {
+//   if (err) return console.log(err);
 
-async function saveUserData(usersArr) {
-  await fs.promises.writeFile('./data.json', JSON.stringify(usersArr, null, 2));
+//   console.log(results);
+// });
 
-  console.log('User Data Updated');
-}
+// db.query('SELECT * FROM users', (err, results) => {
+//   if (err) return console.log(err);
+
+//   console.log(results);
+// });
+
+const api_routes = require('./routes/api_routes');
 
 // Opening up the middleware channel to allow json to be sent through from the client
 app.use(express.json());
 
-// Share or created a GET route for every file in the public folder
+// Share or create a GET route for every file in the public folder
 app.use(express.static('./public'));
 
-// open CORS to all domains
-app.use(cors());
-
-// // root route
-
-// app.get('/', (requestObj,responseObj) => {
-// responseObj.sendFile(path.join(__dirname, './public/index.html'));
-// });
-
-// app.get('/css/style.css', (requestObj,responseObj) => {
-//   responseObj.sendFile(path.join(__dirname, './public/css/style.css'))
-// });
-
-// Route to retreive/GET all users from the json database
-app.get('/api/users', async (requestObj, responseObj) => {
-  // Read the json file data
-  const users = await getUserData();
-
-  responseObj.send(users);
-});
-
-// Route to add a user to the json database
-app.post('/api/users', async (requestObj, responseObj) => {
-  // Get the old users array
-  const users = await getUserData();
-
-  // Push the body object from the client to our old array
-  users.push(requestObj.body);
-
-  // Overwrite the old array with the newly updated array
-  await saveUserData(users);
-
-  // Respond back to the client
-  responseObj.send({
-    message: 'User added successfully!'
-  })
-});
+// Load Routes
+app.use('/api', api_routes);
 
 app.listen(PORT, () => {
   console.log('Server started on port', PORT);
 });
-
-
-
 
 
 

@@ -1,15 +1,21 @@
 body {
-    background-color: lavender;
+    background-color: black;
     font-family: sans-serif;
 }
 
 .text-center {
     text-align: center;
+    color: lime;
 }
 
 p span {
     background: #222;
-    padding: 2px 4px;
+    padding: 2px 5px;
     color: yellow;
+
+}
+
+p {
+    color: lime;
 }
 
